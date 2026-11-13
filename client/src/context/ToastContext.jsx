@@ -1,0 +1,54 @@
+import React, { createContext, useContext, useState, useCallback } from 'react';
+
+const ToastContext = createContext(null);
+
+export const ToastProvider = ({ children }) => {
+  const [toasts, setToasts] = useState([]);
+  const [celebrationAchievement, setCelebrationAchievement] = useState(null);
+
+  const showToast = useCallback((message, type = 'success', duration = 4000) => {
+    const id = Date.now() + Math.random().toString(36).substring(2, 9);
+    setToasts((prev) => [...prev, { id, message, type }]);
+
+    if (duration > 0) {
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, duration);
+    }
+  }, []);
+
+  const removeToast = useCallback((id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  const triggerCelebration = useCallback((achievement) => {
+    setCelebrationAchievement(achievement);
+  }, []);
+
+  const dismissCelebration = useCallback(() => {
+    setCelebrationAchievement(null);
+  }, []);
+
+  return (
+    <ToastContext.Provider
+      value={{
+        showToast,
+        removeToast,
+        toasts,
+        celebrationAchievement,
+        triggerCelebration,
+        dismissCelebration,
+      }}
+    >
+      {children}
+    </ToastContext.Provider>
+  );
+};
+
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider');
+  }
+  return context;
+};
