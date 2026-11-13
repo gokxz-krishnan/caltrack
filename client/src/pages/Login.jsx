@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Activity, Lock, Mail, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { Activity, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -30,25 +30,7 @@ export const Login = () => {
     }
   };
 
-  const handleDemoLogin = async () => {
-    setEmail('alex@caltrack.io');
-    setPassword('caltrack123');
-    setError('');
-    setLoading(true);
-
-    try {
-      await login('alex@caltrack.io', 'caltrack123');
-      showToast('Logged in as Demo User!', 'success');
-      navigate('/');
-    } catch (err) {
-      // If demo user doesn't exist yet, we can register it or advise user
-      setError('Demo account not registered yet. Feel free to register any email below!');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
+return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-[#090d16] selection:bg-emerald-500/20 selection:text-emerald-400">
       <div className="w-full max-w-md">
         {/* Brand Header */}
@@ -118,18 +100,6 @@ export const Login = () => {
             </button>
           </form>
 
-          {/* Quick Demo Login Option */}
-          <div className="mt-5 pt-5 border-t border-[#24304d]/70">
-            <button
-              type="button"
-              onClick={handleDemoLogin}
-              disabled={loading}
-              className="w-full flex items-center justify-center space-x-2 py-2 bg-[#161e31] hover:bg-[#1a243a] border border-[#24304d] text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Fill Demo Account (alex@caltrack.io)</span>
-            </button>
-          </div>
         </div>
 
         {/* Footer */}
