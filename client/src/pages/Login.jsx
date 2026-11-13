@@ -41,9 +41,6 @@ return (
           <h1 className="text-2xl font-bold tracking-tight text-white">
             Welcome to CalTrack
           </h1>
-          <p className="text-sm text-slate-400 mt-1.5">
-            Consistency over perfection. Track your daily intake.
-          </p>
         </div>
 
         {/* Card */}
